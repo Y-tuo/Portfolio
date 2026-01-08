@@ -3,7 +3,15 @@ import { ArrowDown, ExternalLink, Sparkles } from 'lucide-react';
 import { Navbar } from './components/Navbar';
 import { Section } from './components/Section';
 import { MicrosoftFolder } from './components/MicrosoftFolder';
+import { CountUp } from './components/CountUp';
 import { PROJECTS, WHY_ME, HOBBIES, SOCIALS } from './constants';
+
+const STATS = [
+  { value: 3, suffix: '+', label: 'Years of Experience' },
+  { value: 15, suffix: '+', label: 'Projects Completed' },
+  { value: 10, suffix: '+', label: 'Honors in Arts & Design' },
+  { value: 366, suffix: '+', label: 'Total Portfolio Visits' },
+];
 
 function App() {
   return (
@@ -11,51 +19,51 @@ function App() {
       <Navbar />
 
       {/* === HERO SECTION === */}
-      <section id="hero" className="relative min-h-screen w-full flex flex-col justify-center px-8 pt-20 overflow-hidden">
-        <div className="max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-12 items-center">
+      <section id="hero" className="relative min-h-screen w-full flex flex-col justify-between px-8 pt-20 pb-12 overflow-hidden">
+        <div className="max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-8 items-center flex-1">
 
           {/* Text Content - Left Aligned to match request (standard alignment) */}
-          <div className="space-y-6 animate-fade-in-up z-10 max-w-2xl flex flex-col items-start text-left justify-self-center">
+          <div className="space-y-5 animate-fade-in-up z-10 max-w-2xl flex flex-col items-start text-left justify-self-center">
             <h2 className="text-lg md:text-xl font-mono text-gray-500 tracking-wider uppercase flex items-center gap-2">
               <Sparkles size={16} className="text-emerald-500" />
               UI Designer
             </h2>
 
-            <div className="space-y-0 pb-4">
-              <h1 className="text-6xl md:text-8xl font-bold tracking-tighter text-gray-900 leading-tight">
+            <div className="space-y-0 pb-2">
+              <h1 className="text-5xl md:text-7xl font-bold tracking-tighter text-gray-900 leading-tight">
                 Hello I'm
               </h1>
-              <h1 className="text-6xl md:text-8xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-teal-600 leading-tight pb-2">
+              <h1 className="text-5xl md:text-7xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-teal-600 leading-tight pb-2">
                 Wang Aoyun
               </h1>
             </div>
 
-            <p className="text-xl text-gray-600 max-w-lg leading-relaxed pt-2">
+            <p className="text-lg text-gray-600 max-w-lg leading-relaxed">
               I excel at crafting elegant digital experiences and I am proficient in various design tools and methodologies to bring user-centric products to life.
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center gap-6 pt-6">
+            <div className="flex flex-col sm:flex-row items-center gap-5 pt-4">
               <a
                 href="#projects"
                 onClick={(e) => {
                   e.preventDefault();
                   document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className="inline-flex items-center gap-2 px-8 py-4 rounded-full border-2 border-gray-900 text-gray-900 font-semibold hover:bg-gray-900 hover:text-white transition-all duration-300 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border-2 border-gray-900 text-gray-900 font-semibold hover:bg-gray-900 hover:text-white transition-all duration-300 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none"
               >
                 Explore Projects
                 <ArrowDown className="w-5 h-5" />
               </a>
 
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-3">
                 {SOCIALS.map((social, idx) => (
                   <a
                     key={idx}
                     href={social.url}
-                    className="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center text-gray-600 hover:border-emerald-500 hover:text-emerald-500 hover:bg-emerald-50 transition-all hover:scale-110"
+                    className="w-11 h-11 rounded-full border border-gray-200 flex items-center justify-center text-gray-600 hover:border-emerald-500 hover:text-emerald-500 hover:bg-emerald-50 transition-all hover:scale-110"
                     title={social.name}
                   >
-                    <social.icon size={20} />
+                    <social.icon size={18} />
                   </a>
                 ))}
               </div>
@@ -63,17 +71,12 @@ function App() {
           </div>
 
           {/* Interactive Circular Image - Center Aligned */}
-          <div className="hidden md:flex relative h-[600px] w-full items-center justify-center">
+          <div className="hidden md:flex relative h-[500px] w-full items-center justify-center">
             {/* Rotating Rings */}
-            <div className="absolute w-[500px] h-[500px] rounded-full border border-emerald-100/60 animate-[spin_15s_linear_infinite]" />
+            <div className="absolute w-[420px] h-[420px] rounded-full border border-emerald-100/60 animate-[spin_15s_linear_infinite]" />
 
             {/* BOLD GREEN DASHED LINE - Refined Pattern based on Reference */}
-            {/* 
-                 Changes:
-                 - Pattern: Long(60) Gap(35) Short(8) Gap(35)
-                 - Increased gap from 20 to 35 as requested
-             */}
-            <svg className="absolute w-[440px] h-[440px] animate-[spin_30s_linear_infinite_reverse] opacity-80" viewBox="0 0 440 440">
+            <svg className="absolute w-[370px] h-[370px] animate-[spin_30s_linear_infinite_reverse] opacity-80" viewBox="0 0 440 440">
               <circle
                 cx="220"
                 cy="220"
@@ -86,10 +89,10 @@ function App() {
               />
             </svg>
 
-            <div className="absolute w-[540px] h-[540px] rounded-full border-[0.5px] border-gray-200 animate-[pulse_4s_ease-in-out_infinite]" />
+            <div className="absolute w-[460px] h-[460px] rounded-full border-[0.5px] border-gray-200 animate-[pulse_4s_ease-in-out_infinite]" />
 
             {/* Image Container with Hover Zoom */}
-            <div className="relative w-[400px] h-[400px] rounded-full overflow-hidden shadow-2xl z-10 group cursor-pointer">
+            <div className="relative w-[340px] h-[340px] rounded-full overflow-hidden shadow-2xl z-10 group cursor-pointer">
               <div className="absolute inset-0 bg-gradient-to-tr from-emerald-500/10 to-blue-500/10 mix-blend-overlay z-10 pointer-events-none" />
               <img
                 src="https://pic.allhistory.com/T18XKCBXET1RCvBVdK.jpeg"
@@ -99,6 +102,23 @@ function App() {
             </div>
           </div>
 
+        </div>
+
+        {/* Stats Bar */}
+        <div className="max-w-7xl mx-auto w-full mt-8">
+          <div className="bg-gray-900 rounded-2xl px-8 py-6 grid grid-cols-2 md:grid-cols-4 gap-6">
+            {STATS.map((stat, idx) => (
+              <div key={idx} className="flex items-baseline gap-3">
+                <span className="text-4xl md:text-5xl font-bold text-white tracking-tight">
+                  <CountUp end={stat.value} suffix={stat.suffix} duration={2000} />
+                </span>
+                <span className="text-gray-400 text-sm md:text-base leading-tight">
+                  {stat.label.split(' ').slice(0, 2).join(' ')}<br />
+                  {stat.label.split(' ').slice(2).join(' ')}
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
