@@ -41,8 +41,8 @@ export const CountUp: React.FC<CountUpProps> = ({ end, suffix = '', msPerIncreme
             const elapsed = timestamp - startTime;
             const progress = Math.min(elapsed / totalDuration, 1);
 
-            // Ease-out cubic for smooth deceleration
-            const eased = 1 - Math.pow(1 - progress, 3);
+            // Ease-out quint for fast start, elegant slow finish
+            const eased = 1 - Math.pow(1 - progress, 5);
             const currentCount = Math.floor(eased * end);
 
             setCount(currentCount);

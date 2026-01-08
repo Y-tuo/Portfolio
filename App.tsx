@@ -7,15 +7,27 @@ import { CountUp } from './components/CountUp';
 import { Toast } from './components/Toast';
 import { PROJECTS, WHY_ME, HOBBIES, SOCIALS } from './constants';
 
-const STATS = [
-  { value: 3, suffix: '+', line1: 'YEARS OF', line2: 'experience' },
-  { value: 15, suffix: '+', line1: 'PROJECTS', line2: 'completed' },
-  { value: 10, suffix: '+', line1: 'DESIGN & ART', line2: 'honors' },
-  { value: 366, suffix: '', line1: 'TOTAL SITE', line2: 'visits' },
+const BASE_STATS = [
+  { value: 3, suffix: '+', line1: 'YEARS OF', line2: 'experience', isDynamic: false },
+  { value: 15, suffix: '+', line1: 'PROJECTS', line2: 'completed', isDynamic: false },
+  { value: 10, suffix: '+', line1: 'DESIGN & ART', line2: 'honors', isDynamic: false },
+  { value: 100, suffix: '', line1: 'TOTAL SITE', line2: 'visits', isDynamic: true },
 ];
 
 function App() {
   const [showToast, setShowToast] = useState(false);
+  const [realVisits, setRealVisits] = useState(0);
+
+  // Simulate fetching real visit count (you can replace with actual API call)
+  useState(() => {
+    // This would be replaced with actual analytics API
+    const fakeRealVisits = Math.floor(Math.random() * 500); // Simulated real visits
+    setRealVisits(fakeRealVisits);
+  });
+
+  const STATS = BASE_STATS.map(stat =>
+    stat.isDynamic ? { ...stat, value: stat.value + realVisits } : stat
+  );
 
   const handleEmailClick = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -120,19 +132,21 @@ function App() {
         </div>
 
         {/* Stats Bar */}
-        <div className="max-w-7xl mx-auto w-full mt-4 px-8">
-          <div className="flex flex-wrap justify-between gap-y-6">
-            {STATS.map((stat, idx) => (
-              <div key={idx} className="flex items-center gap-3">
-                <span className="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight tabular-nums min-w-[80px] md:min-w-[100px]">
-                  <CountUp end={stat.value} suffix={stat.suffix} />
-                </span>
-                <span className="text-gray-500 text-sm leading-tight">
-                  {stat.line1}<br />
-                  {stat.line2}
-                </span>
-              </div>
-            ))}
+        <div className="max-w-7xl mx-auto w-full mt-4">
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="md:col-span-2 flex justify-between items-center divide-x divide-gray-200">
+              {STATS.map((stat, idx) => (
+                <div key={idx} className="flex items-center gap-4 flex-1 first:pl-0 pl-8 last:pr-0 pr-8">
+                  <span className="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight tabular-nums min-w-[80px] md:min-w-[100px]">
+                    <CountUp end={stat.value} suffix={stat.suffix} />
+                  </span>
+                  <span className="text-gray-500 text-sm leading-tight">
+                    {stat.line1}<br />
+                    {stat.line2}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
