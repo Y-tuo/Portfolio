@@ -8,9 +8,9 @@ import { Toast } from './components/Toast';
 import { PROJECTS, WHY_ME, HOBBIES, SOCIALS } from './constants';
 
 const BASE_STATS = [
-  { value: 3, suffix: '', line1: 'YEARS OF', line2: 'experience', isDynamic: false, duration: 1000 },
-  { value: 15, suffix: '', line1: 'PROJECTS', line2: 'completed', isDynamic: false, duration: 3000 },
-  { value: 10, suffix: '', line1: 'DESIGN & ART', line2: 'honors', isDynamic: false, duration: 2000 },
+  { value: 3, suffix: '', line1: 'YEARS OF', line2: 'experience', isDynamic: false },
+  { value: 15, suffix: '', line1: 'PROJECTS', line2: 'completed', isDynamic: false },
+  { value: 10, suffix: '', line1: 'DESIGN & ART', line2: 'honors', isDynamic: false },
   { value: 100, suffix: '', line1: 'TOTAL SITE', line2: 'visits', isDynamic: true },
 ];
 
@@ -134,7 +134,7 @@ function App() {
         {/* Stats Bar */}
         <div className="max-w-7xl mx-auto w-full mt-4">
           <div className="grid md:grid-cols-2 gap-8">
-            <div className="md:col-span-2 grid grid-cols-4 divide-x divide-gray-200 w-[80%]">
+            <div className="md:col-span-2 grid grid-cols-4 divide-x divide-gray-200 w-[90%]">
               {STATS.map((stat, idx) => (
                 <div
                   key={idx}
@@ -144,7 +144,7 @@ function App() {
                     }`}
                 >
                   <span className="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight tabular-nums min-w-[80px] md:min-w-[100px] text-right">
-                    <CountUp end={stat.value} suffix={stat.suffix} duration={stat.duration} />
+                    <CountUp end={stat.value} suffix={stat.suffix} />
                   </span>
                   <span className="text-gray-500 text-sm leading-tight text-left">
                     {stat.line1}<br />

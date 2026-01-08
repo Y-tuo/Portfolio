@@ -9,7 +9,7 @@ interface CountUpProps {
     duration?: number; // explicit fixed duration in ms
 }
 
-export const CountUp: React.FC<CountUpProps> = ({ end, suffix = '', msPerIncrement = 50, maxDuration = 5000, minDuration = 1000, duration }) => {
+export const CountUp: React.FC<CountUpProps> = ({ end, suffix = '', msPerIncrement = 250, maxDuration = 5000, minDuration = 1000, duration }) => {
     const [count, setCount] = useState(0);
     const [hasStarted, setHasStarted] = useState(false);
     const ref = useRef<HTMLSpanElement>(null);
