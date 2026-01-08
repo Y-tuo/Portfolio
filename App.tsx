@@ -120,21 +120,19 @@ function App() {
         </div>
 
         {/* Stats Bar */}
-        <div className="max-w-7xl mx-auto w-full mt-4">
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:col-span-2 justify-self-center max-w-4xl">
-              {STATS.map((stat, idx) => (
-                <div key={idx} className="flex items-center gap-3">
-                  <span className="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight">
-                    <CountUp end={stat.value} suffix={stat.suffix} />
-                  </span>
-                  <span className="text-gray-500 text-sm leading-tight">
-                    {stat.line1}<br />
-                    {stat.line2}
-                  </span>
-                </div>
-              ))}
-            </div>
+        <div className="max-w-7xl mx-auto w-full mt-4 px-8">
+          <div className="flex flex-wrap justify-between gap-y-6">
+            {STATS.map((stat, idx) => (
+              <div key={idx} className="flex items-center gap-3">
+                <span className="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight tabular-nums min-w-[80px] md:min-w-[100px]">
+                  <CountUp end={stat.value} suffix={stat.suffix} />
+                </span>
+                <span className="text-gray-500 text-sm leading-tight">
+                  {stat.line1}<br />
+                  {stat.line2}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
       </section>
