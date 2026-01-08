@@ -133,13 +133,10 @@ function App() {
 
         {/* Stats Bar */}
         <div className="max-w-7xl mx-auto w-full mt-4">
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="md:col-span-2 grid grid-cols-4 divide-x divide-gray-200 w-[90%]">
-              {STATS.map((stat, idx) => (
-                <div
-                  key={idx}
-                  className="flex items-center gap-6 justify-center px-4"
-                >
+          <div className="flex w-[90%] items-center justify-between">
+            {STATS.map((stat, idx) => (
+              <React.Fragment key={idx}>
+                <div className="flex items-center gap-6">
                   <span className="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight tabular-nums min-w-[80px] md:min-w-[100px] text-right">
                     <CountUp end={stat.value} suffix={stat.suffix} />
                   </span>
@@ -148,8 +145,13 @@ function App() {
                     {stat.line2}
                   </span>
                 </div>
-              ))}
-            </div>
+                {idx < STATS.length - 1 && (
+                  <div className="flex-1 flex justify-center">
+                    <div className="w-px h-12 bg-gray-200"></div>
+                  </div>
+                )}
+              </React.Fragment>
+            ))}
           </div>
         </div>
       </section>
