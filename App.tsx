@@ -67,12 +67,11 @@ function App() {
             {/* Rotating Rings */}
             <div className="absolute w-[500px] h-[500px] rounded-full border border-emerald-100/60 animate-[spin_15s_linear_infinite]" />
 
-            {/* BOLD GREEN DASHED LINE - Alternating Lengths (10 pairs) */}
+            {/* BOLD GREEN DASHED LINE - Refined Pattern based on Reference */}
             {/* 
                  Changes:
-                 - Pattern: Long(60) Gap(32) Short(12) Gap(32)
-                 - Total length per cycle: 136
-                 - ~10 cycles for circumference ~1363
+                 - Pattern: Long(80) Gap(20) Short(8) Gap(20)
+                 - More distinctly "Long-Short" with tighter gaps
              */}
             <svg className="absolute w-[440px] h-[440px] animate-[spin_30s_linear_infinite_reverse] opacity-80" viewBox="0 0 440 440">
               <circle
@@ -81,8 +80,8 @@ function App() {
                 r="217"
                 fill="none"
                 stroke="#10b981"
-                strokeWidth="6"
-                strokeDasharray="60 32 12 32"
+                strokeWidth="5"
+                strokeDasharray="80 20 8 20"
                 strokeLinecap="round"
               />
             </svg>
