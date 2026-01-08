@@ -126,7 +126,7 @@ function App() {
       </Section>
 
       {/* === WHY ME === */}
-      <Section id="whyme" title="我的优势" englishTitle="Why Me" className="bg-white">
+      <Section id="whyme" title="我的优势" englishTitle="My Advantages" className="bg-white">
         <div className="grid md:grid-cols-3 gap-8">
           {WHY_ME.map((point, idx) => (
             <div key={idx} className="p-8 rounded-2xl bg-stone-50 hover:bg-stone-100 transition-colors border border-stone-100">

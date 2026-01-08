@@ -1,13 +1,13 @@
-import { Lightbulb, PenTool, Users, Search, Layout, Rocket, Mail, Linkedin, Dribbble, Twitter, Github } from "lucide-react";
+import { Lightbulb, PenTool, Users, Search, Layout, Rocket, Mail, Linkedin, Dribbble, Twitter, Github, Home, User, Star, Briefcase, Coffee, MessageCircle } from "lucide-react";
 import { Project, MethodologyStep, WhyMePoint, SocialLink, Hobby } from "./types";
 
 export const NAV_LINKS = [
-  { name: "首页", href: "#hero" }, // Home
-  { name: "关于我", href: "#about" }, // About
-  { name: "我的优势", href: "#whyme" }, // My Advantages
-  { name: "项目展示", href: "#projects" }, // Projects
-  { name: "工作之余", href: "#afterwork" }, // After Work
-  { name: "联系我", href: "#contact" }, // Contact
+  { name: "首页", href: "#hero", icon: Home }, // Home
+  { name: "关于我", href: "#about", icon: User }, // About
+  { name: "我的优势", href: "#whyme", icon: Star }, // My Advantages
+  { name: "项目展示", href: "#projects", icon: Briefcase }, // Projects
+  { name: "工作之余", href: "#afterwork", icon: Coffee }, // After Work
+  { name: "联系我", href: "#contact", icon: MessageCircle }, // Contact
 ];
 
 export const PROJECTS: Project[] = [
