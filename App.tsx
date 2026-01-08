@@ -134,13 +134,13 @@ function App() {
         {/* Stats Bar */}
         <div className="max-w-7xl mx-auto w-full mt-4">
           <div className="grid md:grid-cols-2 gap-8">
-            <div className="md:col-span-2 grid grid-cols-4 divide-x divide-gray-200">
+            <div className="md:col-span-2 grid grid-cols-4 divide-x divide-gray-200 w-[80%]">
               {STATS.map((stat, idx) => (
                 <div
                   key={idx}
                   className={`flex items-center gap-6 ${idx === 0 ? 'justify-start pr-4' :
-                      idx === STATS.length - 1 ? 'justify-end pl-4' :
-                        'justify-center px-4'
+                    idx === STATS.length - 1 ? 'justify-end pl-4' :
+                      'justify-center px-4'
                     }`}
                 >
                   <span className="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight tabular-nums min-w-[80px] md:min-w-[100px] text-right">
