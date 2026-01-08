@@ -6,9 +6,10 @@ interface CountUpProps {
     msPerIncrement?: number; // milliseconds per number increment
     maxDuration?: number; // maximum duration in ms
     minDuration?: number; // minimum duration in ms
+    duration?: number; // explicit fixed duration in ms
 }
 
-export const CountUp: React.FC<CountUpProps> = ({ end, suffix = '', msPerIncrement = 50, maxDuration = 5000, minDuration = 1000 }) => {
+export const CountUp: React.FC<CountUpProps> = ({ end, suffix = '', msPerIncrement = 50, maxDuration = 5000, minDuration = 1000, duration }) => {
     const [count, setCount] = useState(0);
     const [hasStarted, setHasStarted] = useState(false);
     const ref = useRef<HTMLSpanElement>(null);
@@ -33,9 +34,12 @@ export const CountUp: React.FC<CountUpProps> = ({ end, suffix = '', msPerIncreme
     useEffect(() => {
         if (!hasStarted) return;
 
-        // Calculate duration: at least minDuration, at most maxDuration
-        const calculatedDuration = end * msPerIncrement;
-        const totalDuration = Math.max(Math.min(calculatedDuration, maxDuration), minDuration);
+        // Calculate duration: explicit duration OR calculated (at least minDuration, at most maxDuration)
+        let totalDuration = duration;
+        if (!totalDuration) {
+            const calculatedDuration = end * msPerIncrement;
+            totalDuration = Math.max(Math.min(calculatedDuration, maxDuration), minDuration);
+        }
         let startTime: number | null = null;
 
         const animate = (timestamp: number) => {

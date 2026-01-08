@@ -8,9 +8,9 @@ import { Toast } from './components/Toast';
 import { PROJECTS, WHY_ME, HOBBIES, SOCIALS } from './constants';
 
 const BASE_STATS = [
-  { value: 3, suffix: '+', line1: 'YEARS OF', line2: 'experience', isDynamic: false },
-  { value: 15, suffix: '+', line1: 'PROJECTS', line2: 'completed', isDynamic: false },
-  { value: 10, suffix: '+', line1: 'DESIGN & ART', line2: 'honors', isDynamic: false },
+  { value: 3, suffix: '', line1: 'YEARS OF', line2: 'experience', isDynamic: false, duration: 1000 },
+  { value: 15, suffix: '', line1: 'PROJECTS', line2: 'completed', isDynamic: false, duration: 3000 },
+  { value: 10, suffix: '', line1: 'DESIGN & ART', line2: 'honors', isDynamic: false, duration: 2000 },
   { value: 100, suffix: '', line1: 'TOTAL SITE', line2: 'visits', isDynamic: true },
 ];
 
@@ -138,7 +138,7 @@ function App() {
               {STATS.map((stat, idx) => (
                 <div key={idx} className="flex items-center gap-4 flex-1 first:pl-0 pl-8 last:pr-0 pr-8">
                   <span className="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight tabular-nums min-w-[80px] md:min-w-[100px]">
-                    <CountUp end={stat.value} suffix={stat.suffix} />
+                    <CountUp end={stat.value} suffix={stat.suffix} duration={stat.duration} />
                   </span>
                   <span className="text-gray-500 text-sm leading-tight">
                     {stat.line1}<br />
