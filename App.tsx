@@ -96,7 +96,7 @@ function App() {
               <img
                 src="https://pic.allhistory.com/T18XKCBXET1RCvBVdK.jpeg"
                 alt="Wang Aoyun"
-                className="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-110 grayscale"
+                className="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-110"
               />
             </div>
           </div>

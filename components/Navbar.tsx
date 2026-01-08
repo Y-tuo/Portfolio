@@ -66,7 +66,7 @@ export const Navbar: React.FC = () => {
         </a>
 
         {/* Desktop Nav */}
-        <div className="hidden md:flex gap-7">
+        <div className="hidden md:flex gap-8">
           {NAV_LINKS.map((link) => (
             <a
               key={link.name}
