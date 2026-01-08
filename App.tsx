@@ -70,8 +70,8 @@ function App() {
             {/* BOLD GREEN DASHED LINE - Refined Pattern based on Reference */}
             {/* 
                  Changes:
-                 - Pattern: Long(60) Gap(20) Short(8) Gap(20)
-                 - Long dash reduced from 80 to 60 as requested
+                 - Pattern: Long(60) Gap(35) Short(8) Gap(35)
+                 - Increased gap from 20 to 35 as requested
              */}
             <svg className="absolute w-[440px] h-[440px] animate-[spin_30s_linear_infinite_reverse] opacity-80" viewBox="0 0 440 440">
               <circle
@@ -81,7 +81,7 @@ function App() {
                 fill="none"
                 stroke="#10b981"
                 strokeWidth="5"
-                strokeDasharray="60 20 8 20"
+                strokeDasharray="60 35 8 35"
                 strokeLinecap="round"
               />
             </svg>
