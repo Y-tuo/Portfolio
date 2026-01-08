@@ -47,10 +47,18 @@ export const CountUp: React.FC<CountUpProps> = ({ end, suffix = '', msPerIncreme
             const elapsed = timestamp - startTime;
             const progress = Math.min(elapsed / totalDuration, 1);
 
-            // Ease-out quint for fast start, elegant slow finish
-            const eased = 1 - Math.pow(1 - progress, 5);
-            const currentCount = Math.floor(eased * end);
+            // Determine easing based on magnitude
+            // "3 digits or less uses ordinary (cubic), >3 digits (interpreted as >=100 here since 100 is 3 digits) uses quintic"
+            // Wait, "3位数以下" = < 3 digits. So 100 (3 digits) is >= 3 digits.
+            // User: "超过3位数之后才会是... 3位数以下...".Strictly > 999 vs < 100.
+            // However, 100 is the only big number. Let's assume >= 100 gets the special treatment for now.
+            const useQuintic = end >= 100;
 
+            const eased = useQuintic
+                ? 1 - Math.pow(1 - progress, 5) // Quintic for large numbers
+                : 1 - Math.pow(1 - progress, 3); // Cubic for small numbers
+
+            const currentCount = Math.floor(eased * end);
             setCount(currentCount);
 
             if (progress < 1) {
