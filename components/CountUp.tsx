@@ -2,11 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 
 interface CountUpProps {
     end: number;
-    duration?: number;
     suffix?: string;
+    msPerIncrement?: number; // milliseconds per number increment
 }
 
-export const CountUp: React.FC<CountUpProps> = ({ end, duration = 2000, suffix = '' }) => {
+export const CountUp: React.FC<CountUpProps> = ({ end, suffix = '', msPerIncrement = 50 }) => {
     const [count, setCount] = useState(0);
     const [hasStarted, setHasStarted] = useState(false);
     const ref = useRef<HTMLSpanElement>(null);
@@ -31,22 +31,29 @@ export const CountUp: React.FC<CountUpProps> = ({ end, duration = 2000, suffix =
     useEffect(() => {
         if (!hasStarted) return;
 
+        const totalDuration = end * msPerIncrement;
         let startTime: number | null = null;
+
         const animate = (timestamp: number) => {
             if (!startTime) startTime = timestamp;
-            const progress = Math.min((timestamp - startTime) / duration, 1);
+            const elapsed = timestamp - startTime;
+            const progress = Math.min(elapsed / totalDuration, 1);
 
-            // Easing function for smooth deceleration
-            const easeOutQuart = 1 - Math.pow(1 - progress, 4);
-            setCount(Math.floor(easeOutQuart * end));
+            // Ease-out cubic for smooth deceleration
+            const eased = 1 - Math.pow(1 - progress, 3);
+            const currentCount = Math.floor(eased * end);
+
+            setCount(currentCount);
 
             if (progress < 1) {
                 requestAnimationFrame(animate);
+            } else {
+                setCount(end); // Ensure we end exactly at the target
             }
         };
 
         requestAnimationFrame(animate);
-    }, [hasStarted, end, duration]);
+    }, [hasStarted, end, msPerIncrement]);
 
     return (
         <span ref={ref}>
