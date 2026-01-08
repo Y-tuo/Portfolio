@@ -4,9 +4,8 @@ import { Project, MethodologyStep, WhyMePoint, SocialLink, Hobby } from "./types
 export const NAV_LINKS = [
   { name: "首页", href: "#hero" }, // Home
   { name: "关于我", href: "#about" }, // About
-  { name: "为什么是我", href: "#whyme" }, // Why Me
+  { name: "我的优势", href: "#whyme" }, // My Advantages
   { name: "项目展示", href: "#projects" }, // Projects
-  { name: "方法论", href: "#methodology" }, // Methodology
   { name: "工作之余", href: "#afterwork" }, // After Work
   { name: "联系我", href: "#contact" }, // Contact
 ];
