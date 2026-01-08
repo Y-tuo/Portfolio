@@ -23,7 +23,7 @@ function App() {
         <div className="max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-8 items-center flex-1">
 
           {/* Text Content - Left Aligned to match request (standard alignment) */}
-          <div className="space-y-5 animate-fade-in-up z-10 max-w-2xl flex flex-col items-start text-left justify-self-center">
+          <div className="space-y-5 animate-fade-in-up z-10 max-w-2xl flex flex-col items-start text-left justify-self-center ml-8">
             <h2 className="text-lg md:text-xl font-mono text-gray-500 tracking-wider uppercase flex items-center gap-2">
               <Sparkles size={16} className="text-emerald-500" />
               UI Designer
@@ -105,14 +105,14 @@ function App() {
         </div>
 
         {/* Stats Bar */}
-        <div className="max-w-7xl mx-auto w-full mt-8">
-          <div className="bg-gray-900 rounded-2xl px-8 py-6 grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div className="max-w-7xl mx-auto w-full mt-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 px-8">
             {STATS.map((stat, idx) => (
               <div key={idx} className="flex items-baseline gap-3">
-                <span className="text-4xl md:text-5xl font-bold text-white tracking-tight">
+                <span className="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight">
                   <CountUp end={stat.value} suffix={stat.suffix} duration={2000} />
                 </span>
-                <span className="text-gray-400 text-sm md:text-base leading-tight">
+                <span className="text-gray-500 text-sm leading-tight">
                   {stat.label.split(' ').slice(0, 2).join(' ')}<br />
                   {stat.label.split(' ').slice(2).join(' ')}
                 </span>
