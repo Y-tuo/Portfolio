@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ArrowDown, ExternalLink, Sparkles } from 'lucide-react';
 import { Navbar } from './components/Navbar';
 import { Section } from './components/Section';
 import { MicrosoftFolder } from './components/MicrosoftFolder';
 import { CountUp } from './components/CountUp';
+import { Toast } from './components/Toast';
 import { PROJECTS, WHY_ME, HOBBIES, SOCIALS } from './constants';
 
 const STATS = [
@@ -14,9 +15,22 @@ const STATS = [
 ];
 
 function App() {
+  const [showToast, setShowToast] = useState(false);
+
+  const handleEmailClick = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    try {
+      await navigator.clipboard.writeText('hi@wangaoyun.cc');
+      setShowToast(true);
+    } catch (err) {
+      console.error('Failed to copy email:', err);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-stone-50 text-gray-900 selection:bg-blue-200 selection:text-blue-900">
       <Navbar />
+      <Toast message="邮箱已复制成功" isVisible={showToast} onClose={() => setShowToast(false)} />
 
       {/* === HERO SECTION === */}
       <section id="hero" className="relative min-h-screen w-full flex flex-col justify-between px-8 pt-20 pb-12 overflow-hidden">
@@ -60,6 +74,7 @@ function App() {
                   <a
                     key={idx}
                     href={social.url}
+                    onClick={social.name === 'Email' ? handleEmailClick : undefined}
                     className="w-11 h-11 rounded-full border border-gray-200 flex items-center justify-center text-gray-600 hover:border-emerald-500 hover:text-emerald-500 hover:bg-emerald-50 transition-all hover:scale-110"
                     title={social.name}
                   >
@@ -106,18 +121,20 @@ function App() {
 
         {/* Stats Bar */}
         <div className="max-w-7xl mx-auto w-full mt-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 px-8">
-            {STATS.map((stat, idx) => (
-              <div key={idx} className="flex items-center gap-3">
-                <span className="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight">
-                  <CountUp end={stat.value} suffix={stat.suffix} />
-                </span>
-                <span className="text-gray-500 text-sm leading-tight">
-                  {stat.line1}<br />
-                  {stat.line2}
-                </span>
-              </div>
-            ))}
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:col-span-2 justify-self-center max-w-4xl">
+              {STATS.map((stat, idx) => (
+                <div key={idx} className="flex items-center gap-3">
+                  <span className="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight">
+                    <CountUp end={stat.value} suffix={stat.suffix} />
+                  </span>
+                  <span className="text-gray-500 text-sm leading-tight">
+                    {stat.line1}<br />
+                    {stat.line2}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
