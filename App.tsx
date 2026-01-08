@@ -94,7 +94,7 @@ function App() {
             <div className="relative w-[400px] h-[400px] rounded-full overflow-hidden shadow-2xl z-10 group cursor-pointer">
               <div className="absolute inset-0 bg-gradient-to-tr from-emerald-500/10 to-blue-500/10 mix-blend-overlay z-10 pointer-events-none" />
               <img
-                src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=800&h=800&auto=format&fit=crop"
+                src="https://pic.allhistory.com/T18XKCBXET1RCvBVdK.jpeg"
                 alt="Wang Aoyun"
                 className="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-110 grayscale"
               />

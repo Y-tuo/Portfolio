@@ -66,18 +66,17 @@ export const Navbar: React.FC = () => {
         </a>
 
         {/* Desktop Nav */}
-        <div className="hidden md:flex gap-8">
+        <div className="hidden md:flex gap-7">
           {NAV_LINKS.map((link) => (
             <a
               key={link.name}
               href={link.href}
               onClick={(e) => handleNavClick(e, link.href)}
-              className={`text-sm transition-all duration-300 py-1 relative group cursor-pointer flex items-center gap-2 ${activeSection === link.href
-                  ? 'text-gray-900 font-bold'
-                  : 'text-gray-500 font-medium hover:text-gray-900'
+              className={`text-sm transition-all duration-300 py-1 relative group cursor-pointer ${activeSection === link.href
+                ? 'text-gray-900 font-bold'
+                : 'text-gray-500 font-medium hover:text-gray-900'
                 }`}
             >
-              <link.icon size={16} strokeWidth={1.5} />
               {link.name}
               {/* Active State Underline */}
               <span className={`absolute -bottom-1 left-0 w-full h-[2px] bg-black transition-transform duration-300 origin-left ${activeSection === link.href ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-50'
