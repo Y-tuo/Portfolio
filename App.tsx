@@ -15,7 +15,7 @@ function App() {
         <div className="max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-12 items-center">
 
           {/* Text Content - Left Aligned to match request (standard alignment) */}
-          <div className="space-y-6 animate-fade-in-up z-10 max-w-2xl flex flex-col items-start text-left">
+          <div className="space-y-6 animate-fade-in-up z-10 max-w-2xl flex flex-col items-start text-left justify-self-center">
             <h2 className="text-lg md:text-xl font-mono text-gray-500 tracking-wider uppercase flex items-center gap-2">
               <Sparkles size={16} className="text-emerald-500" />
               UI Designer
