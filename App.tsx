@@ -5,6 +5,7 @@ import { Section } from './components/Section';
 import { MicrosoftFolder } from './components/MicrosoftFolder';
 import { CountUp } from './components/CountUp';
 import { Toast } from './components/Toast';
+import { FloatingEmoji } from './components/FloatingEmoji';
 import { PROJECTS, WHY_ME, HOBBIES, SOCIALS } from './constants';
 
 const BASE_STATS = [
@@ -127,6 +128,12 @@ function App() {
                 className="w-full h-full object-cover scale-[1.3] transition-transform duration-700 ease-in-out group-hover:scale-[1.4]"
               />
             </div>
+
+            {/* Floating 3D Emojis */}
+            <FloatingEmoji className="top-10 right-20" initialDelay={0} />
+            <FloatingEmoji className="bottom-20 right-10" initialDelay={1.5} />
+            <FloatingEmoji className="bottom-32 left-10" initialDelay={0.8} />
+
           </div>
 
         </div>
