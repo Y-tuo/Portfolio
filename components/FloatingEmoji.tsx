@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const EMOJI_POOL = [
     'https://em-content.zobj.net/source/microsoft-teams/363/rocket_1f680.png',
@@ -12,6 +12,18 @@ const EMOJI_POOL = [
     'https://em-content.zobj.net/source/microsoft-teams/363/victory-hand_270c.png',
 ];
 
+// Preload images to prevent flickering/white gaps
+const preloadImages = () => {
+    if (typeof window !== 'undefined') {
+        EMOJI_POOL.forEach((src) => {
+            const img = new Image();
+            img.src = src;
+        });
+    }
+};
+
+preloadImages();
+
 interface FloatingEmojiProps {
     className?: string; // For positioning
     initialDelay?: number;
@@ -19,15 +31,17 @@ interface FloatingEmojiProps {
 
 export const FloatingEmoji: React.FC<FloatingEmojiProps> = ({ className = '', initialDelay = 0 }) => {
     const [currentEmoji, setCurrentEmoji] = useState(() => EMOJI_POOL[Math.floor(Math.random() * EMOJI_POOL.length)]);
-    const [isAnimating, setIsAnimating] = useState(false);
+    const [isChanging, setIsChanging] = useState(false);
+    const [isHovering, setIsHovering] = useState(false);
 
     // Random float animation duration between 3s and 6s
     const floatDuration = 3 + Math.random() * 3;
 
-    const handleClick = () => {
-        if (isAnimating) return;
+    const handleClick = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        if (isChanging) return;
 
-        setIsAnimating(true);
+        setIsChanging(true);
 
         // Switch emoji halfway through the pop animation
         setTimeout(() => {
@@ -40,35 +54,40 @@ export const FloatingEmoji: React.FC<FloatingEmojiProps> = ({ className = '', in
 
         // Reset animation state
         setTimeout(() => {
-            setIsAnimating(false);
-        }, 600);
+            setIsChanging(false);
+        }, 500);
     };
 
     return (
         <div
-            className={`absolute cursor-pointer transition-transform select-none z-20 ${className}`}
-            onMouseEnter={handleClick}
+            className={`absolute cursor-pointer select-none z-20 ${className}`}
             onClick={handleClick}
+            onMouseEnter={() => setIsHovering(true)}
+            onMouseLeave={() => setIsHovering(false)}
             style={{
                 animation: `float ${floatDuration}s ease-in-out infinite`,
                 animationDelay: `${initialDelay}s`
             }}
         >
             <div
-                className={`w-16 h-16 transition-all duration-500 ease-spring ${isAnimating ? 'scale-0 rotate-180 opacity-0' : 'scale-100 rotate-0 opacity-100 opacity-90 hover:opacity-100 hover:scale-110'
+                className={`w-16 h-16 transition-all duration-300 ease-spring filter drop-shadow-xl ${isChanging
+                        ? 'scale-0 rotate-180 opacity-0' // Changing state (Click): shrink & rotate
+                        : isHovering
+                            ? 'scale-125 -rotate-12' // Hover state: scale up & tilt
+                            : 'scale-100 rotate-0 opacity-90' // Normal state
                     }`}
             >
                 <img
                     src={currentEmoji}
                     alt="3D Emoji"
-                    className="w-full h-full object-contain filter drop-shadow-xl"
+                    className="w-full h-full object-contain"
                     draggable={false}
                 />
             </div>
             <style>{`
         @keyframes float {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-15px) rotate(2deg); }
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-15px); }
         }
         .ease-spring {
           transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
