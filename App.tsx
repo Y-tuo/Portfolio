@@ -124,7 +124,7 @@ function App() {
               <img
                 src="/hero_image_new.jpg"
                 alt="Wang Aoyun"
-                className="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-110"
+                className="w-full h-full object-cover scale-110 transition-transform duration-700 ease-in-out group-hover:scale-125"
               />
             </div>
           </div>
