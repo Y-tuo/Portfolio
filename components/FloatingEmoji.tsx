@@ -9,7 +9,6 @@ const EMOJI_POOL = [
     'https://em-content.zobj.net/source/microsoft-teams/363/musical-note_1f3b5.png',
     'https://em-content.zobj.net/source/microsoft-teams/363/laptop_1f4bb.png',
     'https://em-content.zobj.net/source/microsoft-teams/363/sparkles_2728.png',
-    'https://em-content.zobj.net/source/microsoft-teams/363/victory-hand_270c.png',
 ];
 
 // Preload images to prevent flickering/white gaps
@@ -71,10 +70,10 @@ export const FloatingEmoji: React.FC<FloatingEmojiProps> = ({ className = '', in
         >
             <div
                 className={`w-16 h-16 transition-all duration-300 ease-spring filter drop-shadow-xl ${isChanging
-                        ? 'scale-0 rotate-180 opacity-0' // Changing state (Click): shrink & rotate
-                        : isHovering
-                            ? 'scale-125 -rotate-12' // Hover state: scale up & tilt
-                            : 'scale-100 rotate-0 opacity-90' // Normal state
+                    ? 'scale-0 rotate-180 opacity-0' // Changing state (Click): shrink & rotate
+                    : isHovering
+                        ? 'scale-125 -rotate-12' // Hover state: scale up & tilt
+                        : 'scale-100 rotate-0 opacity-90' // Normal state
                     }`}
             >
                 <img
