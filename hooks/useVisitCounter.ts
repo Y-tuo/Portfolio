@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
 
-// 本地存储键
 const STORAGE_KEYS = {
     visitCount: 'portfolio_visit_count',
     sessionVisited: 'portfolio_session_visited',
 };
 
-// API 端点（Vercel Serverless Function）
 const API_URL = '/api/visit';
+const DEFAULT_COUNT = 88;
 
 interface CounterState {
     count: number;
@@ -15,17 +14,22 @@ interface CounterState {
     error: string | null;
 }
 
+// 辅助函数：从 localStorage 获取计数
+const getLocalCount = (): number => {
+    const stored = localStorage.getItem(STORAGE_KEYS.visitCount);
+    const count = stored ? parseInt(stored, 10) : DEFAULT_COUNT;
+    return isNaN(count) || count < 0 ? DEFAULT_COUNT : count;
+};
+
+// 辅助函数：保存计数到 localStorage
+const saveLocalCount = (count: number): void => {
+    localStorage.setItem(STORAGE_KEYS.visitCount, count.toString());
+};
+
 /**
  * 访问计数器 Hook
- * 
- * 工作原理:
- * 1. 首次加载时，尝试从 API 获取全局访问计数
- * 2. 如果是本次会话的首次访问（使用 sessionStorage 判断），则增加计数
- * 3. 如果 API 不可用，回退到 localStorage 本地计数
- * 
- * 计数规则:
- * - 每个浏览器会话只计数一次（防止刷新重复计数）
- * - 使用服务端 API 实现全局统一计数
+ * - 每个浏览器会话只计数一次
+ * - 优先使用服务端 API，失败时回退到本地存储
  */
 export function useVisitCounter(): CounterState {
     const [state, setState] = useState<CounterState>({
@@ -35,91 +39,40 @@ export function useVisitCounter(): CounterState {
     });
 
     useEffect(() => {
-        const updateVisitCount = async () => {
+        const updateCount = async () => {
+            const isNewSession = !sessionStorage.getItem(STORAGE_KEYS.sessionVisited);
+            const method = isNewSession ? 'POST' : 'GET';
+
             try {
-                // 检查是否是本次会话的首次访问
-                const sessionVisited = sessionStorage.getItem(STORAGE_KEYS.sessionVisited);
+                const response = await fetch(API_URL, {
+                    method,
+                    headers: isNewSession ? { 'Content-Type': 'application/json' } : undefined,
+                });
 
-                if (!sessionVisited) {
-                    // 本次会话首次访问，增加计数
-                    try {
-                        const response = await fetch(API_URL, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                        });
-
-                        if (response.ok) {
-                            const data = await response.json();
-                            sessionStorage.setItem(STORAGE_KEYS.sessionVisited, 'true');
-                            localStorage.setItem(STORAGE_KEYS.visitCount, data.count.toString());
-
-                            setState({
-                                count: data.count,
-                                loading: false,
-                                error: null,
-                            });
-                            return;
-                        }
-                    } catch (apiError) {
-                        console.warn('API call failed, falling back to local storage:', apiError);
+                if (response.ok) {
+                    const { count } = await response.json();
+                    if (isNewSession) {
+                        sessionStorage.setItem(STORAGE_KEYS.sessionVisited, 'true');
                     }
-
-                    // API 失败时回退到本地计数
-                    const storedCount = localStorage.getItem(STORAGE_KEYS.visitCount);
-                    let currentCount = storedCount ? parseInt(storedCount, 10) : 88; // 初始值设为 88
-                    if (isNaN(currentCount) || currentCount < 0) currentCount = 88;
-
-                    currentCount += 1;
-                    localStorage.setItem(STORAGE_KEYS.visitCount, currentCount.toString());
-                    sessionStorage.setItem(STORAGE_KEYS.sessionVisited, 'true');
-
-                    setState({
-                        count: currentCount,
-                        loading: false,
-                        error: null,
-                    });
-                } else {
-                    // 已经访问过，只获取当前计数
-                    try {
-                        const response = await fetch(API_URL);
-                        if (response.ok) {
-                            const data = await response.json();
-                            localStorage.setItem(STORAGE_KEYS.visitCount, data.count.toString());
-
-                            setState({
-                                count: data.count,
-                                loading: false,
-                                error: null,
-                            });
-                            return;
-                        }
-                    } catch (apiError) {
-                        console.warn('API call failed, using cached count:', apiError);
-                    }
-
-                    // API 失败时使用缓存的计数
-                    const storedCount = localStorage.getItem(STORAGE_KEYS.visitCount);
-                    const currentCount = storedCount ? parseInt(storedCount, 10) : 88;
-
-                    setState({
-                        count: isNaN(currentCount) ? 88 : currentCount,
-                        loading: false,
-                        error: null,
-                    });
+                    saveLocalCount(count);
+                    setState({ count, loading: false, error: null });
+                    return;
                 }
             } catch (error) {
-                console.error('Failed to update visit counter:', error);
-                // 完全失败时使用默认值
-                const storedCount = localStorage.getItem(STORAGE_KEYS.visitCount);
-                setState({
-                    count: storedCount ? parseInt(storedCount, 10) : 88,
-                    loading: false,
-                    error: 'Failed to update visit count',
-                });
+                console.warn('API failed, using local storage:', error);
             }
+
+            // API 失败时使用本地计数
+            let count = getLocalCount();
+            if (isNewSession) {
+                count += 1;
+                saveLocalCount(count);
+                sessionStorage.setItem(STORAGE_KEYS.sessionVisited, 'true');
+            }
+            setState({ count, loading: false, error: null });
         };
 
-        updateVisitCount();
+        updateCount();
     }, []);
 
     return state;
