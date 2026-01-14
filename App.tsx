@@ -7,24 +7,18 @@ import { CountUp } from './components/CountUp';
 import { Toast } from './components/Toast';
 import { FloatingEmoji, EMOJI_POOL } from './components/FloatingEmoji';
 import { PROJECTS, WHY_ME, HOBBIES, SOCIALS } from './constants';
+import { useVisitCounter } from './hooks/useVisitCounter';
 
 const BASE_STATS = [
   { value: 3, suffix: '', line1: 'YEARS OF', line2: 'experience', isDynamic: false },
   { value: 15, suffix: '', line1: 'PROJECTS', line2: 'completed', isDynamic: false },
   { value: 10, suffix: '', line1: 'DESIGN & ART', line2: 'honors', isDynamic: false },
-  { value: 100, suffix: '', line1: 'TOTAL SITE', line2: 'visits', isDynamic: true },
+  { value: 0, suffix: '', line1: 'TOTAL SITE', line2: 'visits', isDynamic: true },
 ];
 
 function App() {
   const [showToast, setShowToast] = useState(false);
-  const [realVisits, setRealVisits] = useState(0);
-
-  // Simulate fetching real visit count (you can replace with actual API call)
-  useState(() => {
-    // This would be replaced with actual analytics API
-    const fakeRealVisits = Math.floor(Math.random() * 500); // Simulated real visits
-    setRealVisits(fakeRealVisits);
-  });
+  const { count: realVisits, loading: visitsLoading } = useVisitCounter();
 
   // Initialize with 3 distinct indices to avoid duplicates on load
   const [emojiIndices, setEmojiIndices] = useState(() => {
