@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const EMOJI_POOL = [
+export const EMOJI_POOL = [
     'https://em-content.zobj.net/source/microsoft-teams/363/rocket_1f680.png',
     'https://em-content.zobj.net/source/microsoft-teams/363/fire_1f525.png',
     'https://em-content.zobj.net/source/microsoft-teams/363/party-popper_1f389.png',
@@ -26,12 +26,18 @@ preloadImages();
 interface FloatingEmojiProps {
     className?: string; // For positioning
     initialDelay?: number;
+    emoji?: string; // Controlled emoji URL
+    onChange?: () => void; // Trigger for parent to change emoji
 }
 
-export const FloatingEmoji: React.FC<FloatingEmojiProps> = ({ className = '', initialDelay = 0 }) => {
-    const [currentEmoji, setCurrentEmoji] = useState(() => EMOJI_POOL[Math.floor(Math.random() * EMOJI_POOL.length)]);
+export const FloatingEmoji: React.FC<FloatingEmojiProps> = ({ className = '', initialDelay = 0, emoji, onChange }) => {
+    // Internal state for uncontrolled usage
+    const [internalEmoji, setInternalEmoji] = useState(() => EMOJI_POOL[Math.floor(Math.random() * EMOJI_POOL.length)]);
     const [isChanging, setIsChanging] = useState(false);
     const [isHovering, setIsHovering] = useState(false);
+
+    // Use passed emoji if available, otherwise internal state
+    const currentEmoji = emoji || internalEmoji;
 
     // Random float animation duration between 3s and 6s
     const floatDuration = 3 + Math.random() * 3;
@@ -44,11 +50,15 @@ export const FloatingEmoji: React.FC<FloatingEmojiProps> = ({ className = '', in
 
         // Switch emoji halfway through the pop animation
         setTimeout(() => {
-            let newEmoji = currentEmoji;
-            while (newEmoji === currentEmoji) {
-                newEmoji = EMOJI_POOL[Math.floor(Math.random() * EMOJI_POOL.length)];
+            if (onChange) {
+                onChange();
+            } else {
+                let newEmoji = internalEmoji;
+                while (newEmoji === internalEmoji) {
+                    newEmoji = EMOJI_POOL[Math.floor(Math.random() * EMOJI_POOL.length)];
+                }
+                setInternalEmoji(newEmoji);
             }
-            setCurrentEmoji(newEmoji);
         }, 200);
 
         // Reset animation state

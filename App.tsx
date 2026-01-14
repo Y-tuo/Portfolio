@@ -5,7 +5,7 @@ import { Section } from './components/Section';
 import { MicrosoftFolder } from './components/MicrosoftFolder';
 import { CountUp } from './components/CountUp';
 import { Toast } from './components/Toast';
-import { FloatingEmoji } from './components/FloatingEmoji';
+import { FloatingEmoji, EMOJI_POOL } from './components/FloatingEmoji';
 import { PROJECTS, WHY_ME, HOBBIES, SOCIALS } from './constants';
 
 const BASE_STATS = [
@@ -25,6 +25,38 @@ function App() {
     const fakeRealVisits = Math.floor(Math.random() * 500); // Simulated real visits
     setRealVisits(fakeRealVisits);
   });
+
+  // Initialize with 3 distinct indices to avoid duplicates on load
+  const [emojiIndices, setEmojiIndices] = useState(() => {
+    // We want 3 unique indices from the pool
+    const indices = Array.from({ length: EMOJI_POOL.length }, (_, i) => i);
+    // Fisher-Yates shuffle
+    for (let i = indices.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [indices[i], indices[j]] = [indices[j], indices[i]];
+    }
+    return indices.slice(0, 3);
+  });
+
+  const handleEmojiChange = (indexToChange: number) => {
+    setEmojiIndices((prev) => {
+      // Create a set of currently used indices to avoid collisions
+      const usedIndices = new Set(prev);
+
+      // Filter distinct available indices from the pool
+      // Exclude all currently visible emojis so the new one is unique
+      const availableIndices = EMOJI_POOL.map((_, i) => i).filter(i => !usedIndices.has(i));
+
+      // Safety check (should not happen given pool size is 8 and we use 3)
+      if (availableIndices.length === 0) return prev;
+
+      const newIndex = availableIndices[Math.floor(Math.random() * availableIndices.length)];
+
+      const newIndices = [...prev];
+      newIndices[indexToChange] = newIndex;
+      return newIndices;
+    });
+  };
 
   const STATS = BASE_STATS.map(stat =>
     stat.isDynamic ? { ...stat, value: stat.value + realVisits } : stat
@@ -130,9 +162,24 @@ function App() {
             </div>
 
             {/* Floating 3D Emojis */}
-            <FloatingEmoji className="top-10 right-20" initialDelay={0} />
-            <FloatingEmoji className="bottom-20 right-10" initialDelay={1.5} />
-            <FloatingEmoji className="bottom-32 left-10" initialDelay={0.8} />
+            <FloatingEmoji
+              className="top-10 right-20"
+              initialDelay={0}
+              emoji={EMOJI_POOL[emojiIndices[0]]}
+              onChange={() => handleEmojiChange(0)}
+            />
+            <FloatingEmoji
+              className="bottom-20 right-10"
+              initialDelay={1.5}
+              emoji={EMOJI_POOL[emojiIndices[1]]}
+              onChange={() => handleEmojiChange(1)}
+            />
+            <FloatingEmoji
+              className="bottom-32 left-10"
+              initialDelay={0.8}
+              emoji={EMOJI_POOL[emojiIndices[2]]}
+              onChange={() => handleEmojiChange(2)}
+            />
 
           </div>
 
