@@ -18,7 +18,7 @@ const BASE_STATS = [
 
 function App() {
   const [showToast, setShowToast] = useState(false);
-  const { count: realVisits } = useVisitCounter();
+  const { count: realVisits, loading: visitsLoading } = useVisitCounter();
 
   // Initialize with 3 distinct indices to avoid duplicates on load
   const [emojiIndices, setEmojiIndices] = useState(() => {

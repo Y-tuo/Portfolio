@@ -1,5 +1,5 @@
-import { Mail, Linkedin, Dribbble, Twitter, Home, User, Star, Briefcase, Coffee, MessageCircle } from "lucide-react";
-import { Project, WhyMePoint, SocialLink, Hobby } from "./types";
+import { Lightbulb, PenTool, Users, Search, Layout, Rocket, Mail, Linkedin, Dribbble, Twitter, Github, Home, User, Star, Briefcase, Coffee, MessageCircle } from "lucide-react";
+import { Project, MethodologyStep, WhyMePoint, SocialLink, Hobby } from "./types";
 
 export const NAV_LINKS = [
   { name: "首页", href: "#hero", icon: Home }, // Home
@@ -31,6 +31,34 @@ export const PROJECTS: Project[] = [
     category: "B2B Platform",
     image: "https://picsum.photos/800/600?random=3",
     color: "bg-indigo-500",
+  }
+];
+
+export const METHODOLOGY: MethodologyStep[] = [
+  {
+    title: "Discover",
+    description: "Deep diving into user needs and business goals through research and empathy.",
+    icon: Search,
+  },
+  {
+    title: "Define",
+    description: "Synthesizing insights to pinpoint the core problem and strategy.",
+    icon: Lightbulb,
+  },
+  {
+    title: "Ideate",
+    description: "Brainstorming and sketching diverse solutions without constraints.",
+    icon: PenTool,
+  },
+  {
+    title: "Prototype",
+    description: "Building low to high-fidelity interactive models for testing.",
+    icon: Layout,
+  },
+  {
+    title: "Test & Launch",
+    description: "Validating with real users and refining for final delivery.",
+    icon: Rocket,
   }
 ];
 
